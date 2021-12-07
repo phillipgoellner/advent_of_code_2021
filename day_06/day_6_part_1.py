@@ -17,23 +17,20 @@ def calculate_for_days(given_population, days):
 
 
 def calculate_new_state_efficient(given_population):
+    def add_or_set(key, value, dictionary):
+        if key in dictionary:
+            dictionary[key] = dictionary[key] + value
+        else:
+            dictionary[key] = value
+
     out = {}
 
     for age, count in given_population:
         if age == 0:
-            if 6 in out:
-                out[6] = out[6] + count
-            else:
-                out[6] = count
-            if 8 in out:
-                out[8] = out[8] + count
-            else:
-                out[8] = count
+            add_or_set(6, count, out)
+            add_or_set(8, count, out)
         else:
-            if age - 1 in out:
-                out[age - 1] = out[age - 1] + count
-            else:
-                out[age - 1] = count
+            add_or_set(age - 1, count, out)
 
     return [(age, out[age]) for age in out]
 
